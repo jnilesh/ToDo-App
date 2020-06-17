@@ -10,7 +10,14 @@ To Do App
 
 {% if messages %}
 	{% for message in messsages %}
-		{{ message }}
+		<div class="alert alert-success alert-dismissable" role="alert">
+			<button class="close" data-dismiss="alert" >
+				<small><sup>x</sup></small>
+			</button>
+	  		{{ message }}
+		</div>
+
+		
 	{% endfor %}
 
 {% endif %}
@@ -30,15 +37,15 @@ To Do App
 	{% for things in all_items %}
 		{% if things.completed %}
 			<tr class="table-success">
-				<td class="striker">{{ things.item }} </td>
-				<td><center>{{ things.completed }}</center></td>
-				<td><center>Delete</center></td>
+				<td class="striker"><a href="{% url 'edit' things.id %}">{{ things.item }}</a> </td>
+				<td><center><a href="{% url 'uncross' things.id %}">Uncross</a></center></td>
+				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td>
 			</tr>
 		{% else %}
 			<tr>
-				<td>{{ things.item }} </td>
-				<td><center>{{ things.completed }}</center></td>
-				<td><center>Delete</center></td>
+				<td><a href="{% url 'edit' things.id %}">{{ things.item }}</a></td>
+				<td><center><a href="{% url 'cross_off' things.id %}"> Cross</a></center></td>
+				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td> 
 			</tr>
 
 		{% endif %}
