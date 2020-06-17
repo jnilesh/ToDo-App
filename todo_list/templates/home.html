@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+To Do App
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if messages %}
+	{% for message in messsages %}
+		{{ message }}
+	{% endfor %}
+
+{% endif %}
+
+<br>
+
+{% if all_items %}
+	<table class="table table-bordered">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Task To Be Done</th>
+				<th scope="col">Completed</th>
+				<th scope="col">Delete</th>
+	    	</tr>
+	 	</thead>
+	 <tbody>
+	{% for things in all_items %}
+		{% if things.completed %}
+			<tr class="table-success">
+				<td class="striker">{{ things.item }} </td>
+				<td><center>{{ things.completed }}</center></td>
+				<td><center>Delete</center></td>
+			</tr>
+		{% else %}
+			<tr>
+				<td>{{ things.item }} </td>
+				<td><center>{{ things.completed }}</center></td>
+				<td><center>Delete</center></td>
+			</tr>
+
+		{% endif %}
+
+	{% endfor %}
+	</tbody> 
+	</table>
+{% endif %}
+
+
+{% endblock %}
