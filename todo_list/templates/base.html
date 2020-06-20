@@ -23,15 +23,33 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'list' %}">ToDoList</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'about' %}">About</a>
       </li>
-      
     </ul>
-    <form class="form-inline my-2 my-lg-0" method="POST">
-      {% csrf_token %}
-      <input class="form-control mr-sm-2" type="search" placeholder="Add to Do List" aria-label="Search" name="item" required>
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Add</button>
-    </form>
+
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">{{ user.username }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+    </ul>
+
+    {% else %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+    </ul>
+    {% endif %}
+         
+         
+
   </div>
 </nav>
 

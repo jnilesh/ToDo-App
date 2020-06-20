@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+To Do App | List
+{% endblock %}
+
+
+
+{% block content %}
+<h1>Add To List</h1>
+	
+    <form class="form-inline my-2 my-lg-0" method="POST">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Add to Do List" aria-label="Search" name="item" required>
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Add</button>
+    </form>
+
+{% if messages %}
+	{% for message in messages %}
+		<br>	
+		<div class="alert alert-success alert-dismissable" role="alert">
+			<button class="close" data-dismiss="alert" >
+				<small><sup>x</sup></small>
+			</button>
+	  		{{ message }}
+		</div>
+
+		
+	{% endfor %}
+
+{% endif %}
+
+<br>
+
+{% if all_items %}
+	<table class="table table-bordered">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Task To Be Done</th>
+				<th scope="col">Completed</th>
+				<th scope="col">Delete</th>
+	    	</tr>
+	 	</thead>
+	 <tbody>
+	{% for things in all_items %}
+		{% if things.completed %}
+			<tr class="table-success">
+				<td class="striker"><a href="{% url 'edit' things.id %}">{{ things.item }}</a> </td>
+				<td><center><a href="{% url 'uncross' things.id %}">Uncross</a></center></td>
+				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td>
+			</tr>
+		{% else %}
+			<tr>
+				<td><a href="{% url 'edit' things.id %}">{{ things.item }}</a></td>
+				<td><center><a href="{% url 'cross_off' things.id %}"> Cross</a></center></td>
+				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td> 
+			</tr>
+
+		{% endif %}
+
+	{% endfor %}
+	</tbody> 
+	</table>
+{% endif %}
+
+
+{% endblock %}

@@ -10,50 +10,22 @@ To Do App
 
 {% if messages %}
 	{% for message in messages %}
+		<br>	
 		<div class="alert alert-success alert-dismissable" role="alert">
 			<button class="close" data-dismiss="alert" >
 				<small><sup>x</sup></small>
 			</button>
 	  		{{ message }}
-		</div>
-
-		
+		</div>		
 	{% endfor %}
-
 {% endif %}
 
-<br>
+{% if user.is_authenticated %}
+	
+	<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+	<p>Username: {{ user.username }}</p>
+	<p>Email: {{ user.email }}</p>
 
-{% if all_items %}
-	<table class="table table-bordered">
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col">Task To Be Done</th>
-				<th scope="col">Completed</th>
-				<th scope="col">Delete</th>
-	    	</tr>
-	 	</thead>
-	 <tbody>
-	{% for things in all_items %}
-		{% if things.completed %}
-			<tr class="table-success">
-				<td class="striker"><a href="{% url 'edit' things.id %}">{{ things.item }}</a> </td>
-				<td><center><a href="{% url 'uncross' things.id %}">Uncross</a></center></td>
-				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td>
-			</tr>
-		{% else %}
-			<tr>
-				<td><a href="{% url 'edit' things.id %}">{{ things.item }}</a></td>
-				<td><center><a href="{% url 'cross_off' things.id %}"> Cross</a></center></td>
-				<td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td> 
-			</tr>
-
-		{% endif %}
-
-	{% endfor %}
-	</tbody> 
-	</table>
 {% endif %}
-
 
 {% endblock %}

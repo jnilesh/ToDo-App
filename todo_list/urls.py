@@ -8,5 +8,8 @@ urlpatterns = [
     path('cross_off/<list_id>',views.cross_off,name='cross_off'),
     path('uncross/<list_id>',views.uncross,name='uncross'),
     path('edit/<list_id>',views.edit,name='edit'),
+    path('login/',views.login_user, name='login'),
+    path('logout/',views.logout_user, name='logout'),
+    path('list/',views.td_list, name='list'),
 
 ]
