@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+To Do App | Edit Profile
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if messages %}
+	{% for message in messages %}
+		<br>	
+		<div class="alert alert-success alert-dismissable" role="alert">
+			<button class="close" data-dismiss="alert" >
+				<small><sup>x</sup></small>
+			</button>
+	  		{{ message }}
+		</div>		
+	{% endfor %}
+{% endif %}
+
+<h2 class="text-center" >Edit Profile</h2>
+<div cass="col-md-6 offset-md-3">
+<form method="POST" action="{% url 'edit_profile' %}">
+	{% csrf_token %}
+
+	{% if form.errors %}
+	<div class="alert alert-danger alert-dismissable" role="alert">
+		<button class="close" data-dismiss="alert" >
+			<small><sup>x</sup></small>
+		</button>
+	  	<p>Your Form has Errors!</p>
+	  	{% for field in form %}
+			{{ field.errors }}
+	  	{% endfor %}
+	</div>
+
+		
+	{% endif %}
+	<br>
+	{{ form.as_p }}
+	<input type="submit" value="Edit Profile" class="btn btn-secondary" name="">
+	<br>
+	<p><small><br>To Change Your Password <a href="{% url 'change_password' %}"> Click Here!</a></small></p>
+</form>
+</div>
+{% endblock %}

@@ -3,7 +3,9 @@ from .models import List
 from .forms import ListForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from .forms import SignUpForm, EditProfileForm
 
 # Create your views here.
 def home(request):
@@ -70,7 +72,7 @@ def logout_user(request):
 
 def td_list(request):
 
-	if request.method== 'POST':
+	if request.method == 'POST':
 		form = ListForm(request.POST or none)
 
 		if form.is_valid():
@@ -81,3 +83,50 @@ def td_list(request):
 	else:
 		all_items = List.objects.all
 		return render(request, 'list.html',{'all_items':all_items})
+
+
+def  register_user(request):
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password1']
+			user = authenticate(request, username=username, password=password)
+			login(request, user)
+			messages.success(request,('You have successfully Registered...'))
+			return redirect('home')
+	else:
+		form = SignUpForm()
+
+	context = {'form':form}	
+	return render(request, 'register.html',context)
+
+
+def edit_profile(request):
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			messages.success(request,('You have made changes to your Profile...'))
+			return redirect('home')
+	else:
+		form = EditProfileForm(instance=request.user)
+
+	context = {'form':form}	
+	return render(request,'edit_profile.html',context)
+
+
+def change_password(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(data=request.POST, user=request.user)
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request,form.user)
+			messages.success(request,('You have made changed your Password...'))
+			return redirect('home')
+	else:
+		form = PasswordChangeForm(user=request.user)
+
+	context = {'form':form}	
+	return render(request,'change_password.html',context)
