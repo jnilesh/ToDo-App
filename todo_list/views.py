@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
-from .forms import SignUpForm, EditProfileForm
+from .forms import SignUpForm, EditProfileForm, ChangePwdForm
 
 # Create your views here.
 def home(request):
@@ -119,14 +119,14 @@ def edit_profile(request):
 
 def change_password(request):
 	if request.method == 'POST':
-		form = PasswordChangeForm(data=request.POST, user=request.user)
+		form = ChangePwdForm(data=request.POST, user=request.user)
 		if form.is_valid():
 			form.save()
 			update_session_auth_hash(request,form.user)
 			messages.success(request,('You have made changed your Password...'))
 			return redirect('home')
 	else:
-		form = PasswordChangeForm(user=request.user)
+		form = ChangePwdForm(user=request.user)
 
 	context = {'form':form}	
 	return render(request,'change_password.html',context)
