@@ -23,12 +23,14 @@ def delete(request, list_id):
 def cross_off(request,list_id):
 	item = List.objects.get(pk=list_id)
 	item.completed = True
+	form.owner=request.user
 	item.save()
 	return redirect('home')
 
 def uncross(request,list_id):
 	item = List.objects.get(pk=list_id)
 	item.completed = False
+	form.owner=request.user
 	item.save()
 	return redirect('home')	
 
@@ -39,6 +41,7 @@ def edit(request,list_id):
 		form = ListForm(request.POST or none,instance=item)
 
 		if form.is_valid():
+			form.owner=request.user
 			form.save()
 			messages.success(request, 'Items has been edited')
 			return redirect('home')
@@ -76,6 +79,7 @@ def td_list(request):
 		form = ListForm(request.POST or none)
 
 		if form.is_valid():
+			form.owner=request.user
 			form.save()
 			messages.success(request, 'Item Has been Added!')
 			return HttpResponseRedirect(request.path_info)

@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}" >
+{% endblock %}
+
+
 {% block title %}
 To Do App | Register
 {% endblock %}
@@ -8,6 +15,66 @@ To Do App | Register
 
 {% block content %}
 
+
+<div class="wrapper">
+	<div class="container">
+		{% if messages %}
+			{% for message in messages %}
+				<br>	
+				<div class="alert alert-success alert-dismissable" role="alert">
+				<button class="close" data-dismiss="alert" >
+				<small><sup>x</sup></small>
+				</button>
+	  			{{ message }}
+				</div>		
+			{% endfor %}
+		{% endif %}
+		<h1>Register</h1>
+		
+		<form method="POST" action="{% url 'register' %}">
+			{% csrf_token %}
+
+			{% if form.errors %}
+			<div class="alert alert-danger alert-dismissable" role="alert">
+				<button class="close" data-dismiss="alert" >
+					<small><sup>x</sup></small>
+				</button>
+			  	<p>Your Form has Errors!</p>
+			  	{% for field in form %}
+			  		{{ field.errors }}	
+			  	{% endfor %}
+			</div>
+
+				
+			{% endif %}
+			<br>
+			{{ form.as_p }}
+
+			<button type="submit" id="login-button" >Register</button>
+		</form>
+	</div>
+	
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+
+
+
+
+
+
+
+<!---
 {% if messages %}
 	{% for message in messages %}
 		<br>	
@@ -44,4 +111,13 @@ To Do App | Register
 	<input type="submit" value="Register" class="btn btn-secondary" name="">
 </form>
 </div>
+-->
+<script type = "text/typescript">
+$("#login-button").click(function(event){
+		 event.preventDefault();
+	 
+	 $('form').fadeOut(500);
+	 $('.wrapper').addClass('form-success');
+});
+</script>
 {% endblock %}

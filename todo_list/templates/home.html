@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/home_style.css' %}" >
+{% endblock %}
+
+
 {% block title %}
 To Do App
 {% endblock %}
@@ -8,24 +15,43 @@ To Do App
 
 {% block content %}
 
-{% if messages %}
-	{% for message in messages %}
-		<br>	
-		<div class="alert alert-success alert-dismissable" role="alert">
-			<button class="close" data-dismiss="alert" >
-				<small><sup>x</sup></small>
-			</button>
-	  		{{ message }}
-		</div>		
-	{% endfor %}
-{% endif %}
+<div class="container">
 
-{% if user.is_authenticated %}
+
 	
-	<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
-	<p>Username: {{ user.username }}</p>
-	<p>Email: {{ user.email }}</p>
+	{% if messages %}
+		{% for message in messages %}
+			<br>	
+			<div class="alert alert-success alert-dismissable" role="alert">
+				<button class="close" data-dismiss="alert" >
+					<small><sup>x</sup></small>
+				</button>
+		  		{{ message }}
+			</div>		
+		{% endfor %}
+	{% endif %}
+	
+	
+	<br>
+	<p class="h1 font-weight-bolder text-center">Organize it all with TodoList</p>
+	<br><br>
+	{% if user.is_authenticated %}
+	<center><input type="button" class="btn btn-primary" onclick="window.location.href='{% url 'list' %}';" value="Get Started" /></center>
+	{% else %}
+	<center><input type="button" class="btn btn-primary" onclick="window.location.href='{% url 'login' %}';" value="Get Started" /></center>
+	{% endif %}
+	<br>
 
-{% endif %}
+	<div class="h1">
+	{% if user.is_authenticated %}
+		
+		<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+		<p>Username: {{ user.username }}</p>
+		<p>Email: {{ user.email }}</p>
 
+	{% endif %}
+	</div>
+
+
+</div>
 {% endblock %}

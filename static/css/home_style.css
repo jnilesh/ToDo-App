@@ -1,0 +1,6 @@
+{% load static %}
+
+body {
+  background: url('https://todoist.com/_next/static/images/header@2x_b52d8f7c7bf19d6c702569d1072ed6a2.webp') no-repeat center center fixed;
+  background-size: cover;
+}
