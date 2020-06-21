@@ -18,21 +18,21 @@ def delete(request, list_id):
 	item = List.objects.get(pk=list_id)
 	item.delete()
 	messages.success(request,('The item has been deleted'))
-	return redirect('home')
+	return redirect('list')
 
 def cross_off(request,list_id):
 	item = List.objects.get(pk=list_id)
 	item.completed = True
 	form.owner=request.user
 	item.save()
-	return redirect('home')
+	return redirect('list')
 
 def uncross(request,list_id):
 	item = List.objects.get(pk=list_id)
 	item.completed = False
 	form.owner=request.user
 	item.save()
-	return redirect('home')	
+	return redirect('list')	
 
 def edit(request,list_id):
 	if request.method== 'POST':
@@ -41,10 +41,9 @@ def edit(request,list_id):
 		form = ListForm(request.POST or none,instance=item)
 
 		if form.is_valid():
-			form.owner=request.user
 			form.save()
 			messages.success(request, 'Items has been edited')
-			return redirect('home')
+			return redirect('list')
 
 	else:
 		item = List.objects.get(pk=list_id)
@@ -52,6 +51,7 @@ def edit(request,list_id):
 
 
 def login_user(request):
+	print(request.__dict__)
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
@@ -76,10 +76,10 @@ def logout_user(request):
 def td_list(request):
 
 	if request.method == 'POST':
-		form = ListForm(request.POST or none)
+		form = ListForm(request.POST)
 
 		if form.is_valid():
-			form.owner=request.user
+			form.owner = request.user.username
 			form.save()
 			messages.success(request, 'Item Has been Added!')
 			return HttpResponseRedirect(request.path_info)

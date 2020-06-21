@@ -48,10 +48,18 @@ class EditProfileForm(UserChangeForm):
 		self.fields['username'].label = ''
 
 
+
+
+
 class ListForm(forms.ModelForm):
 	class Meta:
 		model = List
 		fields = ["item","completed"]
+
+
+
+
+
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="",widget=forms.TextInput(attrs={'placeholder':'Email Address'}))
