@@ -49,7 +49,6 @@ def edit(request,list_id):
 
 
 def login_user(request):
-	print(request.__dict__)
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
@@ -143,3 +142,7 @@ def change_password(request):
 
 	context = {'form':form}	
 	return render(request,'change_password.html',context)
+
+
+def r_login(request):
+	return redirect('login')
