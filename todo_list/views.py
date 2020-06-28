@@ -90,7 +90,7 @@ def td_list(request):
 
 		else:
 			name = request.user 
-			all_items = List.objects.filter(author=name)
+			all_items = List.objects.filter(user=name.id)
 			return render(request, 'list.html',{'all_items':all_items})
 	else:
 		messages.info(request, 'You must login first')
