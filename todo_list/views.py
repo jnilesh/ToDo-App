@@ -23,14 +23,12 @@ def delete(request, list_id):
 def cross_off(request,list_id):
 	item = List.objects.get(pk=list_id)
 	item.completed = True
-	form.owner=request.user
 	item.save()
 	return redirect('list')
 
-def uncross(request,list_id):
+def uncross(request,list_id):	
 	item = List.objects.get(pk=list_id)
 	item.completed = False
-	form.owner=request.user
 	item.save()
 	return redirect('list')	
 
@@ -75,25 +73,36 @@ def logout_user(request):
 
 def td_list(request):
 
-	if request.method == 'POST':
-		form = ListForm(request.POST)
+	if request.user.is_authenticated:
+		if request.method == 'POST':
+			form = ListForm(request.POST)
 
-		if form.is_valid():
-			form.owner = request.user.username
-			form.save()
-			messages.success(request, 'Item Has been Added!')
-			return HttpResponseRedirect(request.path_info)
+			if form.is_valid():
+				form.save()
+				messages.success(request, 'Item Has been Added!')
+				return redirect('list')
 
+			else:
+				messages.success(request,('Error Adding ! Please retry...'))
+				messages.success(request,(form.errors))
+				return redirect('list')
+	
+
+		else:
+			name = request.user 
+			all_items = List.objects.filter(author=name)
+			return render(request, 'list.html',{'all_items':all_items})
 	else:
-		all_items = List.objects.all
-		return render(request, 'list.html',{'all_items':all_items})
+		messages.info(request, 'You must login first')
+		return redirect('login')
+
 
 
 def  register_user(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			form.save()
+			form.save()		
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password1']
 			user = authenticate(request, username=username, password=password)
