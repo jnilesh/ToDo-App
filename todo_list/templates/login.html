@@ -12,19 +12,9 @@ To Do App 1 | Login
 
 {% block content %}
 
-<div class="wrapper">
-	<div class="container">
-		{% if messages %}
-			{% for message in messages %}
-				<br>	
-				<div class="alert alert-success alert-dismissable" role="alert">
-				<button class="close" data-dismiss="alert" >
-				<small><sup>x</sup></small>
-				</button>
-	  			{{ message }}
-				</div>		
-			{% endfor %}
-		{% endif %}
+<div class="wrap">
+	<div class="cont">
+
 		<h1>Login</h1>
 		
 		<form method="POST">
@@ -80,13 +70,13 @@ To Do App 1 | Login
 	</form>
 </div>
 --> 
-<script type = "text/typescript">
+<!-- <script type = "text/typescript">
 $("#login-button").click(function(event){
 		 event.preventDefault();
 	 
 	 $('form').fadeOut(500);
 	 $('.wrapper').addClass('form-success');
 });
-</script>
+</script> -->
 {% endblock %}
 

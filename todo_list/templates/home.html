@@ -17,19 +17,6 @@ To Do App
 
 <div class="container">
 
-
-	
-	{% if messages %}
-		{% for message in messages %}
-			<br>	
-			<div class="alert alert-success alert-dismissable" role="alert">
-				<button class="close" data-dismiss="alert" >
-					<small><sup>x</sup></small>
-				</button>
-		  		{{ message }}
-			</div>		
-		{% endfor %}
-	{% endif %}
 	
 	
 	<br>
@@ -42,7 +29,7 @@ To Do App
 	{% endif %}
 	<br>
 
-	<div class="h1">
+<!-- 	<div class="h1">
 	{% if user.is_authenticated %}
 		
 		<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
@@ -50,7 +37,7 @@ To Do App
 		<p>Email: {{ user.email }}</p>
 
 	{% endif %}
-	</div>
+	</div> -->
 
 
 </div>
