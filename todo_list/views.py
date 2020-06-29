@@ -12,7 +12,7 @@ def home(request):
 	return render(request, 'home.html')
 
 def about(request):
-	return render(request, 'about.html',{})
+	return redirect("https://nileshresume.herokuapp.com/")
 
 def delete(request, list_id):
 	item = List.objects.get(pk=list_id)
