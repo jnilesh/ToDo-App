@@ -47,7 +47,6 @@ def uncross(request,list_id):
 def edit(request,list_id):
 	if request.method == 'POST':
 		item = List.objects.get(pk=list_id)
-		print(item.user)
 		if item.user == request.user:
 			form = item
 			form.item = request.POST.get("item")
@@ -65,7 +64,12 @@ def edit(request,list_id):
 			return redirect('list')		
 
 	else:
-		item = List.objects.get(pk=list_id)
+		try:
+			item = List.objects.get(pk=list_id)
+		except List.DoesNotExist:
+			messages.error(request,'You are not authorised to edit that item')
+			return redirect('list')	
+		print(item)
 		if item:
 			if item.user != request.user:
 				messages.error(request,'You are not authorised to edit that item')
