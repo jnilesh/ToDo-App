@@ -66,11 +66,15 @@ def edit(request,list_id):
 
 	else:
 		item = List.objects.get(pk=list_id)
-		if item.user != request.user:
+		if item:
+			if item.user != request.user:
+				messages.error(request,'You are not authorised to edit that item')
+				return redirect('list')	
+			else:
+				return render(request, 'edit.html',{'item':item})
+		else:
 			messages.error(request,'You are not authorised to edit that item')
 			return redirect('list')	
-		else:
-			return render(request, 'edit.html',{'item':item})
 
 
 def login_user(request):
