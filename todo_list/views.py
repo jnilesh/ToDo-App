@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect 
 from .models import List
-from .forms import ListForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
@@ -27,38 +26,57 @@ def about(request):
 		return render(request, 'about.html',{})
 
 def delete(request, list_id):
-	item = List.objects.get(pk=list_id)
-	item.delete()
-	messages.success(request,('The item has been deleted'))
-	return redirect('list')
+	try:
+		item = List.objects.get(pk=list_id)
+	except List.DoesNotExist:
+		messages.error(request,'You are not authorised to delete that item')
+	if item.user != request.user:
+		messages.error(request,'You are not authorised to cross_off that item')
+		return redirect('list')	
+	else:
+		item.delete()
+		messages.success(request,('The item has been deleted'))
+		return redirect('list')
 
 def cross_off(request,list_id):
-	item = List.objects.get(pk=list_id)
-	item.completed = True
-	item.save()
-	return redirect('list')
+	try:
+		item = List.objects.get(pk=list_id)
+	except List.DoesNotExist:
+		messages.error(request,'You are not authorised to cross_off that item')
+	if item.user != request.user:
+		messages.error(request,'You are not authorised to cross_off that item')
+		return redirect('list')	
+	else:
+		item.completed = True
+		item.save()
+		return redirect('list')	
+
 
 def uncross(request,list_id):	
-	item = List.objects.get(pk=list_id)
-	item.completed = False
-	item.save()
-	return redirect('list')	
+	try:
+		item = List.objects.get(pk=list_id)
+	except List.DoesNotExist:
+		messages.error(request,'You are not authorised to uncross that item')
+	if item.user != request.user:
+		messages.error(request,'You are not authorised to uncross that item')
+		return redirect('list')	
+	else:
+		item.completed = False
+		item.save()
+		return redirect('list')	
 
 def edit(request,list_id):
 	if request.method == 'POST':
-		item = List.objects.get(pk=list_id)
+		try:
+			item = List.objects.get(pk=list_id)
+		except List.DoesNotExist:
+			messages.error(request,'You are not authorised to edit that item')
 		if item.user == request.user:
 			form = item
 			form.item = request.POST.get("item")
-
-			if form:
-				form.save()
-				messages.success(request, 'Items has been edited')
-				return redirect('list')
-			else:
-				messages.error(request,'Error in editing item')
-				messages.error(request,form.errors)
-				return render(request, 'edit.html',{'item':item})
+			form.save()
+			messages.success(request, 'Items has been edited')
+			return redirect('list')
 		else:
 			messages.error(request,'You are not authorised to edit that item')
 			return redirect('list')		
@@ -69,7 +87,6 @@ def edit(request,list_id):
 		except List.DoesNotExist:
 			messages.error(request,'You are not authorised to edit that item')
 			return redirect('list')	
-		print(item)
 		if item:
 			if item.user != request.user:
 				messages.error(request,'You are not authorised to edit that item')
@@ -107,9 +124,11 @@ def td_list(request):
 
 	if request.user.is_authenticated:
 		if request.method == 'POST':
-			form = ListForm(request.POST)
-
-			if form.is_valid():
+			form = List()
+			form.item = request.POST.get("item")
+			form.user = request.user
+			
+			if form:
 				form.save()
 				messages.success(request, 'Item Has been Added!')
 				return redirect('list')

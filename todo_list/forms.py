@@ -51,15 +51,6 @@ class EditProfileForm(UserChangeForm):
 
 
 
-class ListForm(forms.ModelForm):
-	class Meta:
-		model = List
-		fields = ["item","completed","user"]
-
-
-
-
-
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="",widget=forms.TextInput(attrs={'placeholder':'Email Address'}))

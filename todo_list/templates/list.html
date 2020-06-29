@@ -13,7 +13,6 @@ To Do App | List
     <form class="form-inline my-2 my-lg-0" method="POST">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" placeholder="Add to Do List" aria-label="Search" name="item" required>
-      <input type="hidden" name="user" value={{ user.id }} hidden>
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Add</button>
 
     </form>

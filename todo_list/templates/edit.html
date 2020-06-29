@@ -8,6 +8,7 @@ To Do App | Edit Item
 
 {% block content %}
 <div class="container" >
+	<br><br>
 	<h2>Edit Item </h2><br>
 	{% if item %}
 		<form class="form-inline my-2 my-lg-0" action="{% url 'edit' item.id %}" method="POST">
