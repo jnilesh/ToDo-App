@@ -45,19 +45,32 @@ def uncross(request,list_id):
 	return redirect('list')	
 
 def edit(request,list_id):
-	if request.method== 'POST':
+	if request.method == 'POST':
 		item = List.objects.get(pk=list_id)
+		print(item.user)
+		if item.user == request.user:
+			form = item
+			form.item = request.POST.get("item")
 
-		form = ListForm(request.POST or none,instance=item)
-
-		if form.is_valid():
-			form.save()
-			messages.success(request, 'Items has been edited')
-			return redirect('list')
+			if form:
+				form.save()
+				messages.success(request, 'Items has been edited')
+				return redirect('list')
+			else:
+				messages.error(request,'Error in editing item')
+				messages.error(request,form.errors)
+				return render(request, 'edit.html',{'item':item})
+		else:
+			messages.error(request,'You are not authorised to edit that item')
+			return redirect('list')		
 
 	else:
 		item = List.objects.get(pk=list_id)
-		return render(request, 'edit.html',{'item':item})
+		if item.user != request.user:
+			messages.error(request,'You are not authorised to edit that item')
+			return redirect('list')	
+		else:
+			return render(request, 'edit.html',{'item':item})
 
 
 def login_user(request):
