@@ -6,13 +6,25 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .forms import SignUpForm, EditProfileForm, ChangePwdForm
+from django.core.mail import send_mail
 
 # Create your views here.
 def home(request):
 	return render(request, 'home.html')
 
 def about(request):
-	return redirect("https://nileshresume.herokuapp.com/")
+	if request.method == "POST":
+		name = request.POST['name']
+		email = request.POST['email']
+		subject = request.POST['subject']
+		message = request.POST['message']
+
+		send_mail('Message from'+' ' + name + ' ' + ' about'+ ' ' + subject ,email+ ' \n\n' + message,email,['nj999988@gmail.com'],)
+		messages.success(request,('THANKS! Your Message Has been sent'))
+		return render(request, 'about.html',{})
+
+	else:
+		return render(request, 'about.html',{})
 
 def delete(request, list_id):
 	item = List.objects.get(pk=list_id)

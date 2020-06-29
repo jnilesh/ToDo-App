@@ -2,10 +2,75 @@
 
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}" >
+{% endblock %}
+
 {% block title %}
 To Do App | About Me
 {% endblock %}
 
 {% block content %}
-<h1>about me</h1>
+<section class="Material-contact-section section-padding section-dark">
+      <div class="container">
+      	<br>
+          <div class="row">
+              <!-- Section Titile -->
+              <div class="col-md-12 wow animated fadeInLeft" data-wow-delay=".2s">
+                  <h1 class="section-title">Love to Hear From You</h1>
+              </div>
+          </div>
+          <div class="row">
+              <!-- Section Titile -->
+              <div class="col-md-6 mt-3 contact-widget-section2 wow animated fadeInLeft" data-wow-delay=".2s">
+                <p>Hi, I am Nilesh. I built this website so you can store your ToDo list online and can access it anywhere on your PC, Laptop, smartphone or any other device with working internet acesss. Your list will remail secure,updated and portable at the same time</p>
+
+                <div class="find-widget">
+                 Checkout my website to know more about Me -
+                </div>
+                <div class="find-widget">
+                 <a href="https://nileshresume.herokuapp.com/">Nilesh Jain</a>
+                 <br><br>
+                </div>
+                
+              </div>
+              <!-- contact form -->
+              <div class="col-md-6 wow animated fadeInRight" data-wow-delay=".2s">
+                  <form class="shake" action="{% url 'about' %}" role="form" method="post" id="contactForm" name="contact-form" data-toggle="validator">
+                      <!-- Name -->
+                      {% csrf_token %}
+                      <div class="form-group label-floating">
+                        <input class="form-control" id="name" type="text" placeholder="Name" name="name" required data-error="Please enter your name">
+                        <div class="help-block with-errors"></div>
+                      </div>
+                      <!-- email -->
+                      <div class="form-group label-floating">
+                       
+                        <input class="form-control" id="email" type="email" placeholder="Email" name="email" required data-error="Please enter your Email">
+                        <div class="help-block with-errors"></div>
+                      </div>
+                      <!-- Subject -->
+                      <div class="form-group label-floating">
+                        
+                        <input class="form-control" id="msg_subject" type="text" placeholder="Subject" name="subject" required data-error="Please enter your message subject">
+                        <div class="help-block with-errors"></div>
+                      </div>
+                      <!-- Message -->
+                      <div class="form-group label-floating">
+                          
+                          <textarea class="form-control" rows="3" id="message" name="message" placeholder="Write your Message Here" required data-error="Write your message"></textarea>
+                          <div class="help-block with-errors"></div>
+                      </div>
+                      <!-- Form Submit -->
+
+                          <button class="float-right form-control" type="submit" id="form-submit">Send Message</button>
+                                       
+                     
+                  </form>
+              </div>
+          </div>
+      </div>
+    </section>
 {% endblock %}
