@@ -108,7 +108,7 @@ def login_user(request):
 			messages.success(request,('You have successfully Logged IN!'))
 			return redirect('home')
 		else:
-			messages.success(request,('Error Login! Please retry...'))
+			messages.error(request,('Error Login! Please retry...'))
 			return redirect('login')
 
 	else:
@@ -134,8 +134,8 @@ def td_list(request):
 				return redirect('list')
 
 			else:
-				messages.success(request,('Error Adding ! Please retry...'))
-				messages.success(request,(form.errors))
+				messages.error(request,('Error Adding ! Please retry...'))
+				messages.error(request,(form.errors))
 				return redirect('list')
 	
 
