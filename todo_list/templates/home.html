@@ -8,26 +8,39 @@
 
 
 {% block title %}
-To Do App
+ORGANISER 
 {% endblock %}
 
 
 
 {% block content %}
 
-<div class="container">
-
+<div>
+	<div class="jumbotron jumbotron-fluid bg-transparent">
+		<div class="container">
+	  <h1 class="display-4">Organize it all with TodoList</h1>
+	  <p class="lead">A Simple To-List Program to help you organise your tasks online to access it anywhere</p>
+	  <hr class="my-4">
+	  <p>Keeps your personalised data secured and accessible on the go.</p>
+	  <br/>
+	  {% if user.is_authenticated %}
+		<input type="button" class="btn btn-primary btn-lg" onclick="window.location.href='{% url 'list' %}';" value="Get Started" />
+		{% else %}
+		<input type="button" class="btn btn-primary btn-lg" onclick="window.location.href='{% url 'login' %}';" value="Get Started" />
+		{% endif %}
+		</div>
+	</div>
 	
 	
-	<br>
-	<p class="h1 font-weight-bolder text-center">Organize it all with TodoList</p>
+	<!-- <br>
+	<p class="h1 font-weight-bolder text-center"></p>
 	<br><br>
 	{% if user.is_authenticated %}
-	<center><input type="button" class="btn btn-primary" onclick="window.location.href='{% url 'list' %}';" value="Get Started" /></center>
+	<center><input type="button" class="btn btn-primary btn-lg" onclick="window.location.href='{% url 'list' %}';" value="Get Started" /></center>
 	{% else %}
-	<center><input type="button" class="btn btn-primary" onclick="window.location.href='{% url 'login' %}';" value="Get Started" /></center>
+	<center><input type="button" class="btn btn-primary btn-lg" onclick="window.location.href='{% url 'login' %}';" value="Get Started" /></center>
 	{% endif %}
-	<br>
+	<br> -->
 
 
 

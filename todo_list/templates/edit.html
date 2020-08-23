@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-To Do App | Edit Item
+ORGANISER | Edit Item
 {% endblock %}
 
 
 
 {% block content %}
+
 <div class="container" >
+	<br>
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+	    <li class="breadcrumb-item"><a href="{% url 'list' %}">List</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+	  </ol>
+	</nav>
 	<br><br>
 	<h2>Edit Item </h2><br>
 	{% if item %}
@@ -15,7 +24,7 @@ To Do App | Edit Item
     	{% csrf_token %}
     	<input class="form-control mr-sm-2" type="search" placeholder="{{ item.item }}" value="{{ item.item }}" aria-label="Search" name="item" required>
     	<input type="hidden" value="{{ item.completed }}" name="completed">
-    	<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Edit Item</button>
+    	<button class="btn btn-outline-info my-2 my-sm-0" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Item</button>
     </form>
 	{% endif %}
 
